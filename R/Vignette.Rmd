@@ -1,0 +1,55 @@
+---
+---
+title: "Vignette BIOL442"
+author: "trevor"
+date: "11/2/2020"
+Vignette
+sample dataset is "BodyFat" which lists the percentage body fats of observations along with
+several predictor variables.
+
+1st step: read in the data
+```{r}
+BodyFat<-read.delim("~/Desktop/BIO 1 Cred/Data Analysis with R/FinalProject2/R/BodyFat.txt")
+
+```
+Example 1:
+To find the mean and median of a given parameter, use the center function. This function will also
+compare the two and describe if there may be a skewed right or skewed left distribution
+```{r}
+center(BodyFat$Weight) #parameter here is weight (continous)
+```
+Output shows that the mean is slightly greater than median. However, in the case outlined above, the median and mean aren't that far apart, so we can sitll say that the distribution is relatively even. The message is mainly used as a warning/caution. It is also important to note that this function can only be used with continuous variables. 
+
+example 2:
+Find partial R-squared
+Essentially to do this, you must construct two models first, acquire their R-squared values, and then plug them back into the function. 
+```{r}
+lm1<-lm(BodyFat$PctBF~BodyFat$Age+BodyFat$Weight)#model with age and weight
+
+lm2<-lm(BodyFat$PctBF~BodyFat$Weight)#model without age
+#generate summaries of each linear model to acquire r-squared values
+summary(lm1)
+summary(lm2)
+r1<-0.4741 #r-squared value for the full model
+r2<-0.3811 #r-squared value for the model with only weight
+partialR2(r1, r2) #output is the partial r-squared value for age
+```
+[1] 0.1502666... this is the amount of variation covered by age in the linear model. 
+
+
+example 3:
+creating basic plots and simple linear regression models
+```{r}
+basic(BodyFat$PctBF, BodyFat$Age)#response variable first, following by predictor variable.
+```
+
+The regression shows a significant coefficient(0.19342), and this is supported by the fact that teh confidence interval does not cover 0 (0.1150798  0.2717535). Meanwhile, the plot shows a roughly linear trend between the response and predictor variable. Meanwhile, further analysis can be conducted by looking at the plots of the linear model (this can be used to check linear model assumptions!).
+
+
+Lastly, just for fun:
+```{r}
+Divisible(121)
+Divisible(130)
+```
+
+Output shows whether or not a number is divisible by 11. 
